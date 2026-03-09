@@ -1,39 +1,60 @@
+
 public class PalindromeCheckerApp {
 
     public static void main(String[] args) {
 
-        String input = "madam";
+        String input = "A man a plan a canal Panama";
+        String normalized = input.replaceAll("[^a-zA-Z]", "").toLowerCase();
 
-        // Choose strategy
-        PalindromeStrategy strategy = new StackStrategy();
+        // Two Pointer Algorithm
+        long start1 = System.nanoTime();
+        boolean result1 = twoPointerPalindrome(normalized);
+        long end1 = System.nanoTime();
 
-        boolean result = strategy.checkPalindrome(input);
+        // Stack Algorithm
+        long start2 = System.nanoTime();
+        boolean result2 = stackPalindrome(normalized);
+        long end2 = System.nanoTime();
 
         System.out.println("Input : " + input);
-        System.out.println("Is Palindrome? : " + result);
+
+        System.out.println("\nTwo Pointer Result : " + result1);
+        System.out.println("Execution Time : " + (end1 - start1) + " ns");
+
+        System.out.println("\nStack Result : " + result2);
+        System.out.println("Execution Time : " + (end2 - start2) + " ns");
     }
-}
 
+    // Algorithm 1: Two Pointer
+    public static boolean twoPointerPalindrome(String input) {
 
-interface PalindromeStrategy {
+        int start = 0;
+        int end = input.length() - 1;
 
-    boolean checkPalindrome(String input);
-}
+        while (start < end) {
 
+            if (input.charAt(start) != input.charAt(end)) {
+                return false;
+            }
 
-class StackStrategy implements PalindromeStrategy {
+            start++;
+            end--;
+        }
 
-    public boolean checkPalindrome(String input) {
+        return true;
+    }
+
+    // Algorithm 2: Stack Method
+    public static boolean stackPalindrome(String input) {
 
         java.util.Stack<Character> stack = new java.util.Stack<>();
 
-        // Push characters into stack
         for (int i = 0; i < input.length(); i++) {
             stack.push(input.charAt(i));
         }
 
-        // Compare while popping
         for (int i = 0; i < input.length(); i++) {
+
             if (input.charAt(i) != stack.pop()) {
                 return false;
             }
