@@ -1,33 +1,28 @@
-package org.example;
-
 public class PalindromeCheckerApp {
 
-    /**
-     * Application entry point for UC2.
-     * @param args Command-line arguments
-     */
+
     public static void main(String[] args) {
 
-        // Hardcoded string
         String input = "madam";
 
-        boolean isPalindrome = true;
+        boolean result = check(input, 0, input.length() - 1);
 
-        // Loop only till half of the string length
-        for (int i = 0; i < input.length() / 2; i++) {
+        System.out.println("Input : " + input);
+        System.out.println("Is Palindrome? : " + result);
+    }
 
-            if (input.charAt(i) != input.charAt(input.length() - 1 - i)) {
-                isPalindrome = false;
-                break;
-            }
+
+    private static boolean check(String s, int start, int end) {
+
+
+        if (start >= end) {
+            return true;
         }
 
-        // Display result
-        if (isPalindrome) {
-            System.out.println(input + " is a Palindrome");
-        } else {
-            System.out.println(input + " is NOT a Palindrome");
+        if (s.charAt(start) != s.charAt(end)) {
+            return false;
         }
+
+        return check(s, start + 1, end - 1);
     }
 }
-
