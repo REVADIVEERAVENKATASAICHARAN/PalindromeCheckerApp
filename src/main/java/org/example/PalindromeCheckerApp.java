@@ -1,13 +1,13 @@
 public class PalindromeCheckerApp {
 
-
     public static void main(String[] args) {
 
         String input = "madam";
 
-        PalindromeService service = new PalindromeService();
+        // Choose strategy
+        PalindromeStrategy strategy = new StackStrategy();
 
-        boolean result = service.checkPalindrome(input);
+        boolean result = strategy.checkPalindrome(input);
 
         System.out.println("Input : " + input);
         System.out.println("Is Palindrome? : " + result);
@@ -15,23 +15,28 @@ public class PalindromeCheckerApp {
 }
 
 
-class PalindromeService {
+interface PalindromeStrategy {
 
+    boolean checkPalindrome(String input);
+}
+
+
+class StackStrategy implements PalindromeStrategy {
 
     public boolean checkPalindrome(String input) {
 
+        java.util.Stack<Character> stack = new java.util.Stack<>();
 
-        int start = 0;
-        int end = input.length() - 1;
+        // Push characters into stack
+        for (int i = 0; i < input.length(); i++) {
+            stack.push(input.charAt(i));
+        }
 
-        while (start < end) {
-
-            if (input.charAt(start) != input.charAt(end)) {
+        // Compare while popping
+        for (int i = 0; i < input.length(); i++) {
+            if (input.charAt(i) != stack.pop()) {
                 return false;
             }
-
-            start++;
-            end--;
         }
 
         return true;
