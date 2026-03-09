@@ -1,33 +1,38 @@
-package org.example;
+import java.util.LinkedList;
+import java.util.Scanner;
 
-public class PalindromeCheckerApp {
+public class uc8PalindromeCheckerApp {
 
-    /**
-     * Application entry point for UC2.
-     * @param args Command-line arguments
-     */
     public static void main(String[] args) {
 
-        // Hardcoded string
-        String input = "madam";
+        Scanner scanner = new Scanner(System.in);
+        LinkedList<Character> list = new LinkedList<>();
+
+        System.out.print("Enter a string: ");
+        String input = scanner.nextLine().toLowerCase();
+
+        for (char c : input.toCharArray()) {
+            list.add(c);
+        }
 
         boolean isPalindrome = true;
 
-        // Loop only till half of the string length
-        for (int i = 0; i < input.length() / 2; i++) {
+        while (list.size() > 1) {
+            char first = list.removeFirst();
+            char last = list.removeLast();
 
-            if (input.charAt(i) != input.charAt(input.length() - 1 - i)) {
+            if (first != last) {
                 isPalindrome = false;
                 break;
             }
         }
 
-        // Display result
         if (isPalindrome) {
-            System.out.println(input + " is a Palindrome");
+            System.out.println("The string is a palindrome.");
         } else {
-            System.out.println(input + " is NOT a Palindrome");
+            System.out.println("The string is NOT a palindrome.");
         }
+
+        scanner.close();
     }
 }
-
